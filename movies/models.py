@@ -6,7 +6,7 @@ from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField("Категория", max_length=150)
-    description = models.TextField("Описание")
+    description = models.TextField("Описание",blank=True)
     url = models.SlugField(max_length=160, unique=True)
 
     def __str__(self):
@@ -36,7 +36,7 @@ class Actor(models.Model):
 
 class Genre(models.Model):
     name = models.CharField("Имя", max_length=100)
-    description = models.TextField("Описание")
+    description = models.TextField("Описание",blank=True)
     url = models.SlugField(max_length=160, unique=True)
 
     def __str__(self):
@@ -74,6 +74,9 @@ class Movie(models.Model):
     def get_absolute_url(self):
         return reverse("movie_detail", kwargs={"slug": self.url})
 
+
+    def get_review(self):
+        return self.reviews_set.filter(parent__isnull = True)
     class Meta:
         verbose_name = "Фильм"
         verbose_name_plural = "Фильмы"
@@ -81,7 +84,6 @@ class Movie(models.Model):
 
 class MovieShots(models.Model):
     title = models.CharField("Заголовок", max_length=100)
-    description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="movie_shots/")
     movie = models.ForeignKey(Movie, verbose_name="Фильм", on_delete=models.CASCADE)
 

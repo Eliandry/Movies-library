@@ -1,15 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {%for movie in movie_list%}
-    <img src="{{movie.poster.url}}">
-    <a href="/{{movie.url}}/">
-        {{movie.title}}
-    </a>
-    {%endfor%}
-</body>
-</html>
+{% extends 'main.html' %}
+{%block title%}Главная{%endblock%}
+{%block content%}
+<div class=" col-lg-9">
+        <div class="row">
+            {% for movie in movie_list %}
+                <div class="col-md-4">
+                    <div class=" text-center mt-lg-4">
+                        <div class="">
+                            <img src="{{ movie.poster.url }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="">
+                            <h4>
+                                <a style="color:black" href="{{ movie.get_absolute_url }}"
+                                   class="editContent">
+                                    {{ movie.title }}
+                                </a>
+                            </h4>
+
+                            <div class="">
+                                <div class="">
+                                    <span class="">{{ movie.tagline }}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{%endblock%}

@@ -3,6 +3,7 @@
 {%block content%}
 {%load static%}
     <strong>{{movie.category}}</strong>
+    <p>{{movie.tagline}}</p>
     <div class="row">
         <div class="col-xl-3 col-lg-3 mb-4">
             <img src="{{movie.poster.url}}">
@@ -10,52 +11,50 @@
 
         <div class="col-xl-6 col-lg-6">
             <h1>{{movie.title}}</h1>
-            <p>{{movie.tagline}}</p>
             <div class="mb-4">
-                <h4>Описание:</h4>{{movie.description}}
+                    <h4>Информация о фильме</h4>
+                    <ul>
+                        <li>
+                            <span><b>Год: </b>{{movie.year}}</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <span><b>Жанры: </b>{% for genre in movie.genres.all %}{{genre.name}} {% endfor %}</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <span><b>Страна: </b>{{movie.country}}</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <span><b>Премьера в мире: </b>{{movie.world_premiere}}</span>
+                        </li>
+                    </ul>
+                        <ul>
+                        <li>
+                            <span><b>Бюджет: </b>{{movie.budget}}$</span>
+                        </li>
+                    </ul>
+                        <ul>
+                        <li>
+                            <span><b>Сборы в США: </b>{{movie.fees_in_usa}}$</span>
+                        </li>
+                    </ul>
+                        <ul>
+                        <li>
+                            <span><b>Сборы в мире: </b>{{movie.fess_in_world}}$</span>
+                        </li>
+                    </ul>
+
             </div>
         </div>
 
     </div>
-    <h4>Информация о фильме</h4>
-    <ul>
-        <li>
-            <span><b>Год: </b>{{movie.year}}</span>
-        </li>
-    </ul>
-    <ul>
-        <li>
-            <span><b>Жанры: </b>{% for genre in movie.genres.all %}{{genre.name}} {% endfor %}</span>
-        </li>
-    </ul>
-    <ul>
-        <li>
-            <span><b>Страна: </b>{{movie.country}}</span>
-        </li>
-    </ul>
-    <ul>
-        <li>
-            <span><b>Премьера в мире: </b>{{movie.world_premiere}}</span>
-        </li>
-    </ul>
-        <ul>
-        <li>
-            <span><b>Бюджет: </b>{{movie.budget}}$</span>
-        </li>
-    </ul>
-        <ul>
-        <li>
-            <span><b>Сборы в США: </b>{{movie.fees_in_usa}}$</span>
-        </li>
-    </ul>
-        <ul>
-        <li>
-            <span><b>Сборы в мире: </b>{{movie.fess_in_world}}$</span>
-        </li>
-    </ul>
-    <div class="mb-4">
-        <h4>Описание:</h4>{{movie.description}}
-    </div>
+
+    <h4>Описание:</h4>{{movie.description|safe}}
     <h4>Режисеры и сценаристы</h4>
     <div class="md-4 row">
         {% for director in movie.directors.all %}

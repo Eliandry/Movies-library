@@ -1,7 +1,16 @@
 from django.contrib import admin
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django import forms
 from .models import *
+from django.utils.safestring import mark_safe
+
+class MovieAdminForm(forms.ModelForm):
+    description = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
 
 
+    class Meta:
+        model = Movie
+        fields = '__all__'
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'url')
@@ -15,16 +24,30 @@ class ReviewFilm(admin.TabularInline):
     readonly_fields = ('name', 'email')
 
 
+class ShotsFilm(admin.TabularInline):
+    model = MovieShots
+    extra = 1
+    readonly_fields = ('get_image',)
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.image.url} width="100" ')
+
+    get_image.short_description = "Изображение"
+
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'url', 'draft')
+    list_display = ('title', 'category', 'url', 'draft','get_poster')
     prepopulated_fields = {'url': ('title',)}
     list_filter = ('year',)
+    readonly_fields = ('get_poster',)
     search_fields = ('title',)
-    inlines = [ReviewFilm]
+    inlines = [ShotsFilm, ReviewFilm]
     save_on_top = True
     list_editable = ('draft',)
+    form = MovieAdminForm
+    def get_poster(self, obj):
+        return mark_safe(f'<img src={obj.poster.url} width="50"')
 
+    get_poster.short_description = "Постер"
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
@@ -36,7 +59,29 @@ class ReviewAdmin(admin.ModelAdmin):
     readonly_fields = ('name', 'email')
 
 
-admin.site.register(Actor)
+@admin.register(Actor)
+class ActorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'age', 'get_image')
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.image.url} width="50" height="60"')
+
+    get_image.short_description = "Фото"
+
+
 admin.site.register(Rating)
 admin.site.register(RatingStar)
-admin.site.register(MovieShots)
+
+
+@admin.register(MovieShots)
+class ShotsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'movie', 'get_image')
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.image.url} width="50" height="60"')
+
+    get_image.short_description = "Изображение"
+
+
+admin.site.site_title = "Films administration"
+admin.site.site_header = "Films administration"

@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+{%block title%}{{movie.name}}{%endblock%}
+{%block content%}
+{%load static%}
+    <strong class="">Актеры и режиссеры</strong>
+    <div class="row">
+        <div class="col-xl-5 col-lg-6 mb-4 p-3">
+            <img src="{{actor.image.url}}" width="400">
+        </div>
+
+        <div class="col-xl-7 col-lg-6">
+            <h1>{{actor.name}}</h1>
+            <div class="mb-4">
+                    <h4>Информация о {{actor.name}}</h4>
+                    <ul>
+                        <li>
+                            <span><b>Возраст: </b>{{actor.age}}</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        {%if actor.film_director.all%}
+                            <li>
+                                <span><b>Режиссер:</b>
+                                {% for movie in actor.film_director.all %}
+                                    <a href="{{movie.get_absolute_url}}">
+                                    {{ movie.title }}
+                                    </a>
+                                {% endfor %}
+                                </span>
+                            </li>
+                        {%endif%}
+                    </ul>
+                    <ul>
+                        {%if actor.film_actor.all%}
+                            <li>
+                                <span><b>Актер:</b></span>
+                                {% for movie in actor.film_actor.all %}
+                                    <a href="{{movie.get_absolute_url}}">
+                                    {{ movie.title }}
+                                    </a>
+                                {% endfor %}
+                            </li>
+                        {%endif%}
+                    </ul>
+                <h4>О {{actor.name}}</h4>
+    {{actor.description|safe}}
+            </div>
+        </div>
+    </div>
+
+
+{%endblock%}

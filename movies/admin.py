@@ -4,13 +4,15 @@ from django import forms
 from .models import *
 from django.utils.safestring import mark_safe
 
+
 class MovieAdminForm(forms.ModelForm):
     description = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
-
 
     class Meta:
         model = Movie
         fields = '__all__'
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'url')
@@ -28,14 +30,17 @@ class ShotsFilm(admin.TabularInline):
     model = MovieShots
     extra = 1
     readonly_fields = ('get_image',)
+
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} width="100" ')
 
     get_image.short_description = "Изображение"
 
+
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'url', 'draft','get_poster')
+    actions = ['publish', 'unpublish']
+    list_display = ('title', 'category', 'url', 'draft', 'get_poster')
     prepopulated_fields = {'url': ('title',)}
     list_filter = ('year',)
     readonly_fields = ('get_poster',)
@@ -44,10 +49,34 @@ class MovieAdmin(admin.ModelAdmin):
     save_on_top = True
     list_editable = ('draft',)
     form = MovieAdminForm
+
     def get_poster(self, obj):
         return mark_safe(f'<img src={obj.poster.url} width="50"')
 
+    def unpublish(self, request, queryset):
+        row_update = queryset.update(draft=True)
+        if row_update == 1:
+            message_bit = "1 запись обновлена"
+        else:
+            message_bit = f"{row_update} записей обновлены"
+        self.message_user(request, f"{message_bit}")
+
+    def publish(self, request, queryset):
+        row_update = queryset.update(draft=False)
+        if row_update == 1:
+            message_bit = "1 запись обновлена"
+        else:
+            message_bit = f"{row_update} записей обновлены"
+        self.message_user(request, f"{message_bit}")
+
+    unpublish.short_description = "Снять"
+    unpublish.allowed_permissions = ('change',)
+
+    publish.short_description = "Опубликовать"
+    publish.allowed_permissions = ('change',)
+
     get_poster.short_description = "Постер"
+
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):

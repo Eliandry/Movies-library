@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 {%block title%}Главная{%endblock%}
 {%block content%}
+{% load movie_tag %}
 <div class=" col-lg-9">
         <div class="row">
             {% for movie in movie_list %}
@@ -28,6 +29,14 @@
                 </div>
             {% endfor %}
         </div>
+        <div class=>
+            <h4>Категории</h4>
+            {% get_categories as categories %}
+            {%for category in categories%}
+                {{category.name}}
+            {%endfor%}
+        </div>
+    {% get_last_movies count=3 %}
 
     </div>
 {%endblock%}

@@ -59,7 +59,7 @@
     <div class="md-4 row">
         {% for director in movie.directors.all %}
         <div class="col-xl-2 col-lg-2 col-md-2 mb-4">
-            <a href="/" style="color:gray">
+            <a href="{{director.get_absolute_url}}" style="color:gray">
                 <img class="bd-placeholder-img rounded-circle" width="100" height="100"  src="{{director.image.url}}">
                 <h5>{{director.name}}</h5>
             </a>
@@ -71,7 +71,7 @@
 
         {% for actor in movie.actors.all %}
             <div class="col-xl-2 col-lg-2 col-md-2 mb-4">
-                <a href="/" style="color:gray">
+                <a href="{{actor.get_absolute_url}}" style="color:gray">
                     <img class="bd-placeholder-img rounded-circle" width="100" height="100"  src="{{actor.image.url}}">
                     <h5>{{actor.name}}</h5>
                 </a>

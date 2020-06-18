@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+    <h4 class="">Последние добавленные</h4>
+    {% for movie in last_movies %}
+        <div class=" row mt-3 ">
+            <div class="">
+                <a href="{{ movie.get_absolute_url }}">
+                    <img src="{{ movie.poster.url }}" width="130" alt="">
+                    <h5>{{ movie.title }}</h5>
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>

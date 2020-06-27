@@ -5,11 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-    <div>
-    <h4 class="">Последние добавленные</h4>
+    <div class="">
+    <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 ">Новинки</h3>
     {% for movie in last_movies %}
-        <div class=" row mt-3 ">
-            <div class="">
+        <div class="row">
+            <div class="p-4">
                 <a href="{{ movie.get_absolute_url }}">
                     <img src="{{ movie.poster.url }}" width="130" alt="">
                     <h5>{{ movie.title }}</h5>

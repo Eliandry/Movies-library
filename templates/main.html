@@ -7,30 +7,85 @@
     <title>{%block title%}{%endblock%}</title>
     {%load static%}
     <style>
-
        .first:first-letter {
         color: red;
         font-size: 27pt;
         font-family: algerian;
+       }
+       .category {
+            font-size: 13pt;
+            color:black;
        }
   </style>
 
 </head>
 <body>
     {% load movie_tag %}
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <a class="my-0 mr-md-auto font-weight-normal" href="/" style="color:black"><h3 class="first" style="font-family: comic sans ms;">Films Django</h3></a>
-          <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="#">Features</a>
-            <a class="p-2 text-dark" href="#">Enterprise</a>
-            <a class="p-2 text-dark" href="#">Support</a>
-            <a class="p-2 text-dark" href="#">Pricing</a>
-          </nav>
-          <a class="btn btn-outline-primary" href="#">Sign up</a>
-    </div>
-    <div class="container">
-        {% block content %}
-        {% endblock %}
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+          <a class="my-0 ml-4 mr-md-auto font-weight-normal" href="/" style="color:white"><h3 class="first" style="font-family: comic sans ms;">Films Django</h3></a>
+          <form class="form-inline mt-2 mt-md-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <a>
+                    <svg class="bi bi-search" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="color:white">
+                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                </svg>
+                </a>
+          </form>
+          <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="#">Sign out</a>
+                 </li>
+          </ul>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-2 col-lg-2 col-xl-2 d-md-block bg-light sidebar collapse">
+                      <form method="get" action="{% url 'filter' %}">
+                      <div class="sidebar-sticky pt-0">
+                          <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 ">Фильтр</h3>
+                          <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-muted">Категории</h4>
+                                <ul class="nav flex-column">
+                                      {% get_categories as categories %}
+                                      {%for category in categories%}
+                                      <li class="nav-item category ml-4">
+                                            <input type="checkbox" class="checked" name="category" value="{{category.id}}">
+                                                <span>{{category.name}}</span>
+                                      </li>
+                                      {%endfor%}
+                                </ul>
+                          <div class="sidebar-sticky pt-0">
+                                <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Жанры</h4>
+                                <ul class="nav flex-column">
+                                    {% for genre in view.get_genres %}
+                                        <li class="nav-item category ml-4">
+                                            <input type="checkbox" class="checked" name="genre" value="{{ genre.id }}">
+                                            <span class="span editContent">{{ genre.name }}</span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                          </div>
+                          <div class="sidebar-sticky pt-0">
+                                <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">Год</h4>
+                                <ul class="nav flex-column">
+                                    {% for year in view.get_years %}
+                                        <li class="nav-item category ml-4">
+                                            <input type="checkbox" class="checked" name="year" value="{{year}}">
+                                            <span class="span editContent">{{ year }}</span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                          </div>
+                            <button type="submit">Отправить</button>
+                        {% get_last_movies count=3 %}
+                      </div>
+                      </form>
+            </nav>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                {% block content %}
+                {% endblock %}
+            </main>
+        </div>
     </div>
 </body>
 </html>

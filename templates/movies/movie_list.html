@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 {%block title%}Главная{%endblock%}
 {%block content%}
+{%load static%}
 {% load movie_tag %}
 <div class=" col-lg-9">
         <div class="row">
@@ -8,7 +9,7 @@
                 <div class="col-md-4">
                     <div class=" text-center mt-lg-4">
                         <div class="">
-                            <img src="{{ movie.poster.url }}" class="img-fluid" alt="">
+                            <img src="{{ movie.poster.url }}" class="img-fluid" width="230" alt="">
                         </div>
                         <div class="">
                             <h4>
@@ -29,14 +30,6 @@
                 </div>
             {% endfor %}
         </div>
-        <div class=>
-            <h4>Категории</h4>
-            {% get_categories as categories %}
-            {%for category in categories%}
-                {{category.name}}
-            {%endfor%}
-        </div>
-    {% get_last_movies count=3 %}
 
     </div>
 {%endblock%}

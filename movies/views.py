@@ -13,7 +13,8 @@ class GenreYear:
         years_sorted_list = sorted(set(Movie.objects.filter(draft=False).values_list('year', flat=True)))
         return years_sorted_list
 
-class MoviesView(GenreYear,ListView):
+
+class MoviesView(GenreYear, ListView):
     model = Movie
     queryset = Movie.objects.filter(draft=False)
 
@@ -23,12 +24,12 @@ class MoviesView(GenreYear,ListView):
     # return context
 
 
-class MovieDetailView(GenreYear,DetailView):
+class MovieDetailView(GenreYear, DetailView):
     model = Movie
     slug_field = 'url'
 
 
-class AddReview(GenreYear,View):
+class AddReview(GenreYear, View):
     def post(self, request, pk):
         movie = Movie.objects.get(id=pk)
         text = request.POST.get('textcomm')
@@ -41,19 +42,18 @@ class AddReview(GenreYear,View):
         review.save()
         return HttpResponseRedirect(movie.get_absolute_url())
 
-
-class ActorView(GenreYear,DetailView):
+class ActorView(GenreYear, DetailView):
     model = Actor
     template_name = 'movies/actor.html'
     slug_field = "name"
 
 
-class FilterMoviesView(GenreYear,ListView):
+class FilterMoviesView(GenreYear, ListView):
+    """Фильтр фильмов"""
     def get_queryset(self):
         queryset = Movie.objects.filter(
-        Q(year__in=self.request.GET.getlist("year")) |
-        Q(genres__in=self.request.GET.getlist("genre")) |
-        Q(category__in=self.request.GET.getlist("category"))
-        )
-
+            Q(year__in=self.request.GET.getlist("year")) |
+            Q(genres__in=self.request.GET.getlist("genre"))|
+            Q(category__in=self.request.GET.getlist("category"))
+        ).distinct().values("title", "tagline", "url", "poster")
         return queryset

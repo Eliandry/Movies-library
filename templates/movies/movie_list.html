@@ -8,12 +8,10 @@
             {% for movie in movie_list %}
                 <div class="col-md-4">
                     <div class=" text-center mt-lg-4">
-                        <div class="">
-                            <img src="{{ movie.poster.url }}" class="img-fluid" width="230" alt="">
-                        </div>
+                        <img src="/media/{{ movie.poster }}" class="img-fluid" width="230" alt="why">
                         <div class="">
                             <h4>
-                                <a style="color:black" href="{{ movie.get_absolute_url }}"
+                                <a style="color:black" href="/{{ movie.url }}"
                                    class="editContent">
                                     {{ movie.title }}
                                 </a>

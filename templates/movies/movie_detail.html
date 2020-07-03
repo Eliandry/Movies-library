@@ -1,11 +1,15 @@
 {% extends 'main.html' %}
 {%block title%}{{movie.title}}{%endblock%}
+{%block style%}
+
+{%endblock%}
 {%block content%}
 {%load static%}
-    <strong>{{movie.category}}</strong>
-    <p>{{movie.tagline}}</p>
+    <link rel="stylesheet" href="{% static 'css/rating.css' %}" type="text/css" media="all">
     <div class="row">
         <div class="col-xl-3 col-lg-3 mb-4">
+            <strong>{{movie.category}}</strong>
+    <p>{{movie.tagline}}</p>
             <img src="{{movie.poster.url}}" width="230">
         </div>
 
@@ -33,19 +37,36 @@
                             <span><b>Премьера в мире: </b>{{movie.world_premiere}}</span>
                         </li>
                     </ul>
-                        <ul>
+                    <ul>
                         <li>
                             <span><b>Бюджет: </b>{{movie.budget}}$</span>
                         </li>
                     </ul>
-                        <ul>
+                    <ul>
                         <li>
                             <span><b>Сборы в США: </b>{{movie.fees_in_usa}}$</span>
                         </li>
                     </ul>
-                        <ul>
+                    <ul>
                         <li>
                             <span><b>Сборы в мире: </b>{{movie.fess_in_world}}$</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <form action="{% url 'add_rating' %}" method="post" name="rating">
+                                <b>Рейтинг:</b>
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ movie.id }}" name="movie">
+                                <span class="rating">
+                                    {% for k, v in star_form.fields.star.choices %}
+                                        <input id="rating{{ v }}" type="radio" name="star"
+                                               value="{{ k }}">
+                                        <label for="rating{{ v }}">{{ k }}</label>
+                                    {% endfor %}
+                                </span>
+                                <span class="editContent">4.0</span>
+                            </form>
                         </li>
                     </ul>
 
@@ -145,4 +166,5 @@
         }
 
     </script>
+    <script src="{%static 'js/rating.js'%}"></script>
 {%endblock%}

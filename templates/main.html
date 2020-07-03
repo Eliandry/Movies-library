@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <title>{%block title%}{%endblock%}</title>
     {%load static%}
+    <link rel="stylesheet" href="{% static 'css/rating.css' %}" type="text/css" media="all">
+    {%block style%}
+    {%endblock%}
     <style>
        .first:first-letter {
         color: red;
@@ -49,8 +52,10 @@
                                       {% get_categories as categories %}
                                       {%for category in categories%}
                                       <li class="nav-item category ml-4">
-                                            <input type="checkbox" class="checked" name="category" value="{{category.id}}">
-                                                <span>{{category.name}}</span>
+                                          <div class="custom-control custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="{{ category.id }}" name="category" value="{{category.id}}">
+                                              <label class="custom-control-label" for="{{ category.id }}">{{category.name}}</label>
+                                          </div>
                                       </li>
                                       {%endfor%}
                                 </ul>
@@ -59,8 +64,10 @@
                                 <ul class="nav flex-column">
                                     {% for genre in view.get_genres %}
                                         <li class="nav-item category ml-4">
-                                            <input type="checkbox" class="checked" name="genre" value="{{ genre.id }}">
-                                            <span class="span editContent">{{ genre.name }}</span>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="{{ genre.name }}" name="genre" value="{{ genre.id }}">
+                                                <label class="custom-control-label" for="{{ genre.name }}">{{ genre.name }}</label>
+                                            </div>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -70,8 +77,10 @@
                                 <ul class="nav flex-column">
                                     {% for year in view.get_years %}
                                         <li class="nav-item category ml-4">
-                                            <input type="checkbox" class="checked" name="year" value="{{year}}">
-                                            <span class="span editContent">{{ year }}</span>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="{{ year }}" name="year" value="{{year}}">
+                                                <label class="custom-control-label" for="{{ year }}">{{ year }}</label>
+                                            </div>
                                         </li>
                                     {% endfor %}
                                 </ul>

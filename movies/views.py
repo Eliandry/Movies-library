@@ -15,10 +15,9 @@ class GenreYear:
 
 
 class MoviesView(GenreYear, ListView):
+    paginate_by = 1
     model = Movie
     queryset = Movie.objects.filter(draft=False)
-
-
 
 
 class MovieDetailView(GenreYear, DetailView):
@@ -52,7 +51,7 @@ class ActorView(GenreYear, DetailView):
 
 
 class FilterMoviesView(GenreYear, ListView):
-    """Фильтр фильмов"""
+    paginate_by = 1
 
     def get_queryset(self):
         queryset = Movie.objects.filter(
@@ -62,9 +61,15 @@ class FilterMoviesView(GenreYear, ListView):
         ).distinct().values("title", "tagline", "url", "poster")
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super(FilterMoviesView, self).get_context_data(**kwargs)
+        context["year"] = ''.join([f"year={x}&" for x in self.request.GET.getlist("year")])
+        context["genre"] = ''.join([f"genre={x}&" for x in self.request.GET.getlist("genre")])
+        context["category"] = ''.join([f"category={x}&" for x in self.request.GET.getlist("category")])
+        return context
+
 
 class AddStarRating(View):
-    """Добавление рейтинга фильму"""
     def get_client_ip(self, request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:

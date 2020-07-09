@@ -3,10 +3,11 @@
 {%block content%}
 {%load static%}
 {% load movie_tag %}
-<div class=" col-lg-9">
+<div class="col-9 col-lg-9">
+    <h2>Главная</h2>
         <div class="row">
             {% for movie in movie_list %}
-                <div class="col-md-4">
+                <div class="col-6 col-md-4 col-xl-3">
                     <div class=" text-center mt-lg-4">
                         <img src="/media/{{ movie.poster }}" class="img-fluid" width="230" alt="why">
                         <div class="">
@@ -28,6 +29,8 @@
                 </div>
             {% endfor %}
         </div>
-
+        <div class="grid-img-right mt-4 text-right bg bg1">
+            {% include 'pagination.html' %}
+        </div>
     </div>
 {%endblock%}

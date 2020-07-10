@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('movies.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('pages/',include('django.contrib.flatpages.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()

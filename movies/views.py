@@ -1,5 +1,5 @@
 from django.db.models import Q
-from .forms import RatingForm
+from .forms import RatingForm, ReviewForm
 from django.views.generic import ListView, DetailView, View
 from .models import *
 from django.http import HttpResponseRedirect, HttpResponse
@@ -27,20 +27,20 @@ class MovieDetailView(GenreYear, DetailView):
     def get_context_data(self, **kwargs):
         context = super(MovieDetailView, self).get_context_data(**kwargs)
         context['star_form'] = RatingForm()
+        context['form']=ReviewForm()
         return context
 
 
 class AddReview(GenreYear, View):
     def post(self, request, pk):
+        form  = ReviewForm(request.POST)
         movie = Movie.objects.get(id=pk)
-        text = request.POST.get('textcomm')
-        name = request.POST.get('namecomm')
-        email = request.POST.get('emailcomm')
-        parent = None
-        if request.POST.get('parent', None):
-            parent = int(request.POST.get('parent'))
-        review = Reviews(name=name, email=email, text=text, movie=movie, parent_id=parent)
-        review.save()
+        if form.is_valid():
+            form = form.save(commit=False)
+            if request.POST.get("parent", None):
+                form.parent_id = int(request.POST.get("parent"))
+            form.movie = movie
+            form.save()
         return HttpResponseRedirect(movie.get_absolute_url())
 
 

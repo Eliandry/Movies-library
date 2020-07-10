@@ -5,7 +5,7 @@
     <link href="/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>{%block title%}{%endblock%}</title>
-    {%load static%}
+    {%load static recaptcha3%}
     <link rel="stylesheet" href="{% static 'css/rating.css' %}" type="text/css" media="all">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
     {%block style%}
@@ -21,7 +21,8 @@
             color:black;
        }
   </style>
-
+      {% recaptcha_init %}
+      {% recaptcha_ready action_name='homepage' %}
 </head>
 <body>
     {% load movie_tag %}

@@ -89,6 +89,14 @@
                         {% get_last_movies count=3 %}
                       </div>
                       </form>
+                <div>
+                    <h4>Рассылка на email</h4>
+                    <form action="{% url 'contact' %}">{%csrf_token%}
+                        <input type="email" placeholder="Your email" name="emails" id="emails">
+                        <button class="btn btn-secondary" type="submit">Сохранить</button>
+                    </form>
+
+                </div>
             </nav>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 {% block content %}

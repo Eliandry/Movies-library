@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load static i18n %}
 {%block title%}{{movie.title}}{%endblock%}
 {%block style%}
 
@@ -19,43 +20,43 @@
                     <h4>Информация о фильме</h4>
                     <ul>
                         <li>
-                            <span><b>Год: </b>{{movie.year}}</span>
+                            <span><b>{% trans 'Год' %}:</b> {{ movie.year }}</span>
                         </li>
                     </ul>
                     <ul>
                         <li>
-                            <span><b>Жанры: </b>{% for genre in movie.genres.all %}{{genre.name}} {% endfor %}</span>
+                            <span><b>{% trans 'Жанры' %}</b>{% for genre in movie.genres.all %}{{genre.name}} {% endfor %}</span>
                         </li>
                     </ul>
                     <ul>
                         <li>
-                            <span><b>Страна: </b>{{movie.country}}</span>
+                           <span><b>{% trans 'Страна' %}:</b> {{ movie.country }}</span>
                         </li>
                     </ul>
                     <ul>
                         <li>
-                            <span><b>Премьера в мире: </b>{{movie.world_premiere}}</span>
+                            <span><b>{% trans 'Премьера в мире' %}:</b>{{movie.world_premiere}}</span>
                         </li>
                     </ul>
                     <ul>
                         <li>
-                            <span><b>Бюджет: </b>{{movie.budget}}$</span>
+                            <span><b>{% trans 'Бюджет' %}:</b>{{movie.budget}}$</span>
                         </li>
                     </ul>
                     <ul>
                         <li>
-                            <span><b>Сборы в США: </b>{{movie.fees_in_usa}}$</span>
+                            <span><b>{% trans 'Сборы в США' %}</b>{{movie.fees_in_usa}}$</span>
                         </li>
                     </ul>
                     <ul>
                         <li>
-                            <span><b>Сборы в мире: </b>{{movie.fess_in_world}}$</span>
+                            <span><b>{% trans 'Сборы в мире' %}:</b>{{movie.fess_in_world}}$</span>
                         </li>
                     </ul>
                     <ul>
                         <li>
                             <form action="{% url 'add_rating' %}" method="post" name="rating">
-                                <b>Рейтинг:</b>
+                                <b>{%trans 'Рейтинг' %}:</b>
                                 {% csrf_token %}
                                 <input type="hidden" value="{{ movie.id }}" name="movie">
                                 <span class="rating">
@@ -75,8 +76,8 @@
 
     </div>
 
-    <h4>Описание:</h4>{{movie.description|safe}}
-    <h4>Режисеры и сценаристы</h4>
+    <h4>{%trans 'Описание'%}:</h4>{{movie.description|safe}}
+    <h4>{% trans 'Режиссеры' %}</h4>
     <div class="md-4 row">
         {% for director in movie.directors.all %}
         <div class="col-xl-2 col-lg-2 col-md-2 mb-4">
@@ -87,7 +88,7 @@
         </div>
     </div>
     {% endfor %}
-    <h4>Актеры</h4>
+    <h4>{% trans 'Актеры' %}</h4>
     <div class="row ">
 
         {% for actor in movie.actors.all %}
@@ -101,7 +102,7 @@
     </div>
 
     <div>
-        <h4>Кадры из фильма:</h4>
+        <h4>{% trans 'Кадры из фильма'%}:</h4>
         {%for image in movie.movieshots_set.all%}
         <img src="{{image.image.url}}">
         {%endfor%}
@@ -127,7 +128,7 @@
     </button>
 </form>
 <div>
-    <h4>Отзывы </h4>
+    <h4>{%trans 'Отзывы' %} </h4>
     {% for review in movie.get_review %}
             <div class="media py-1">
                 <img src="{% static 'images/avatar_azamat.png' %}" class="mr-1 img-fluid" alt="image" width="60">

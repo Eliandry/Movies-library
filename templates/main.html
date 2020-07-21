@@ -25,6 +25,7 @@
       {% recaptcha_ready action_name='homepage' %}
 </head>
 <body>
+    {% load i18n movie_tag %}
     {% load movie_tag %}
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
           <a class="my-0 ml-4 mr-md-auto font-weight-normal" href="/" style="color:white"><h3 class="first" style="font-family: comic sans ms;">Films Django</h3></a>
@@ -40,6 +41,21 @@
                     <a class="nav-link" href="#">Sign out</a>
                  </li>
           </ul>
+          <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                        <input name="next" class="form-control mr-sm-2" type="hidden" value="{{ redirect_to }}">
+                        <select name="language">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                                <option value="{{ language.code }}"
+                                    {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                    {{ language.name_local }} ({{ language.code }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                <input type="submit" class="btn btn-secondary" value="Go">
+            </form>
     </nav>
     <div class="container-fluid">
         <div class="row">

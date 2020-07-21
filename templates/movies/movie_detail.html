@@ -107,7 +107,7 @@
         <img src="{{image.image.url}}">
         {%endfor%}
     </div>
-
+<h4>{%trans 'Оставить отзыв' %} </h4>
 <form action="{% url 'add_review' movie.id %}" method="post" class="mt-4" id="formReview">
     {% csrf_token %}
     <input type="hidden" name="parent" id="contactparent" value="">

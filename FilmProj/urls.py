@@ -26,6 +26,7 @@ urlpatterns = [
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()
 
 urlpatterns+=i18n_patterns(
+    path('accounts/',include('allauth.urls')),
     path('pages/',include('django.contrib.flatpages.urls')),
     path('contact/',include('Newsletter.urls')),
     path('',include('movies.urls')),

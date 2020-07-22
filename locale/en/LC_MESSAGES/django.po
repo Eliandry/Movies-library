@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-21 11:53+0300\n"
+"POT-Creation-Date: 2020-07-22 12:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\templates\main.html:41
+msgid "Выйти"
+msgstr "Log out"
+
+#: .\templates\main.html:43
+#, fuzzy
+#| msgid "Рейтинг"
+msgid "Войти"
+msgstr "Log in"
 
 #: .\templates\movies\movie_detail.html:23
 msgid "Год"
@@ -65,6 +75,14 @@ msgstr "Actors"
 msgid "Кадры из фильма"
 msgstr "Stills from the film"
 
+#: .\templates\movies\movie_detail.html:110
+msgid "Оставить отзыв"
+msgstr "Give feedback"
+
 #: .\templates\movies\movie_detail.html:131
 msgid "Отзывы"
 msgstr "Reviews"
+
+#: .\templates\movies\movie_list.html:9
+msgid "Главная"
+msgstr "Main"

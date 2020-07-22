@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -27,24 +26,29 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
     'modeltranslation',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'django.contrib.sites',
     'django.contrib.flatpages',
+
     'ckeditor',
     'ckeditor_uploader',
+
     'movies',
     'Newsletter',
+
     'snowpenguin.django.recaptcha3',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -60,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
 ]
 
@@ -68,7 +73,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR,],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +87,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'FilmProj.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -117,7 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -130,22 +133,23 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# allauth
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_REDIRECT_URL = "/"
-
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
-gettext= lambda s:s
-
-LANGUAGES= (
-    ('ru',gettext('RUSSIA')),
-    ('en',gettext('ENGLISH')),
+# i18n
+gettext = lambda s: s
+LANGUAGES = (
+    ('ru', gettext('RUSSIA')),
+    ('en', gettext('ENGLISH')),
 )
-
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -153,13 +157,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
-#STATIC_ROOT = os.path.join(BASE_DIR,'static')
+# STATIC_ROOT = os.path.join(BASE_DIR,'static')
 MEDIA_URL = '/media/'
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 MEDIA_ROOT = MEDIA_DIR
+
+# ckeditor
 CKEDITOR_UPLOAD_PATH = "uploads/"
-
-
 CKEDITOR_CONFIGS = {
     'default': {
         # 'skin': 'moono',
@@ -207,7 +211,7 @@ CKEDITOR_CONFIGS = {
         # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
+            'uploadimage',  # the upload image feature
             # your extra plugins here
             'div',
             'autolink',
@@ -226,11 +230,11 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-
+# Для Recaptcha
 RECAPTCHA_PUBLIC_KEY = "6Lex5a8ZAAAAADDMwICS-7BXuXS5mZQTyG9g1oR4"
 RECAPTCHA_PRIVATE_KEY = "6Lex5a8ZAAAAAOGZeRSxC4a3_fy7G_5NM_NzyUEZ"
 RECAPTCHA_DEFAULT_ACTION = 'generic'
 RECAPTCHA_SCORE_THRESHOLD = 0.5
 
-#Для Flatpages
-SITE_ID=1
+# Для Flatpages
+SITE_ID = 1

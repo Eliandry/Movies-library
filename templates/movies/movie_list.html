@@ -1,10 +1,12 @@
 {% extends 'main.html' %}
+{% load static i18n %}
+{% load i18n movie_tag %}
 {%block title%}Главная{%endblock%}
 {%block content%}
 {%load static%}
 {% load movie_tag %}
 <div class="col-9 col-lg-9">
-    <h2>Главная</h2>
+    <h2>{% trans 'Главная' %}</h2>
         <div class="row">
             {% for movie in movie_list %}
                 <div class="col-6 col-md-4 col-xl-3">

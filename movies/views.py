@@ -95,7 +95,7 @@ class SearchView(GenreYear, ListView):
     paginate_by = 4
     def get_queryset(self):
         title= self.request.GET.get("q")
-        return Movie.objects.filter(title=title)
+        return Movie.objects.filter(title=title.capitalize())
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
